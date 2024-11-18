@@ -1,0 +1,84 @@
+<label for="patientFilter">Filter Patients by First Name:</label>
+<input type="text" id="patientFilter" oninput="filterData()" />
+
+<table>
+  <thead>
+    <tr>
+      <th>Patient ID</th>
+      <th>First Name</th>
+      <th>Last Name</th>
+      <th>Date Of Birth</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% patients.forEach(row => { %>
+    <tr class="patientRow">
+      <td><%= row.patient_id %></td>
+      <td class="patientFirstName"><%= row.first_name %></td>
+      <td><%= row.last_name %></td>
+      <td><%= row.date_of_birth %></td>
+    </tr>
+    <% }); %>
+  </tbody>
+</table>
+
+<label for="providerFilter">Filter Providers by First Name:</label>
+<input type="text" id="providerFilter" oninput="filterData()" />
+
+<table>
+  <thead>
+    <tr>
+      <th>First Name</th>
+      <th>Last Name</th>
+      <th>Provider Specialty</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% providers.forEach(row => { %>
+    <tr class="providerRow">
+      <td class="providerFirstName"><%= row.first_name %></td>
+      <td><%= row.last_name %></td>
+      <td><%= row.Provider_specialty %></td>
+    </tr>
+    <% }); %>
+  </tbody>
+</table>
+
+<script>
+  function filterData() {
+    const patientFilter = document
+      .getElementById("patientFilter")
+      .value.toLowerCase();
+    const providerFilter = document
+      .getElementById("providerFilter")
+      .value.toLowerCase();
+
+    const patientRows = document.querySelectorAll(".patientRow");
+    patientRows.forEach((row) => {
+      const firstName = row
+        .querySelector(".patientFirstName")
+        .textContent.toLowerCase();
+      if (firstName.includes(patientFilter)) {
+        row.style.display = "";
+      } else {
+        row.style.display = "none";
+      }
+    });
+
+    const providerRows = document.querySelectorAll(".providerRow");
+    providerRows.forEach((row) => {
+      const firstName = row
+        .querySelector(".providerFirstName")
+        .textContent.toLowerCase();
+      if (firstName.includes(providerFilter)) {
+        row.style.display = "";
+      } else {
+        row.style.display = "none";
+      }
+    });
+  }
+
+  window.onload = function () {
+    filterData();
+  };
+</script>
